@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.xpath;
 
 import org.hamcrest.core.Is;
 import org.junit.Test;
@@ -14,7 +15,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 
 
 @RunWith(SpringRunner.class)
@@ -32,16 +32,16 @@ public class UserControllerTest {
     }
 
     @Test
-    public void createUser_JSON() throws Exception {
+    public void createUser_XML() throws Exception {
         String userJson = "{\"username\":\"keesun\",\"password\":\"1234\"}";
         mockMvc.perform(post("/users/create")
             .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON) // 응답으로 원하는 타입
+            .accept(MediaType.APPLICATION_XML) // acceptHeader
             .content(userJson))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.username", 
-                    Is.is("keesun")))
-                .andExpect(jsonPath("$.password", 
-                    Is.is("1234")));
+                .andExpect(jsonPath("$.username", Is.is("keesun")))
+                .andExpect(jsonPath("$.password", Is.is("1234")));
+                // .andExpect(xpath("/User/username").string("keesun"))
+                // .andExpect(xpath("User/password").string("1234"));
     }
 }
