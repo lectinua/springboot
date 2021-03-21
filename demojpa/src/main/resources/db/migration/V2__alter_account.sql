@@ -1,0 +1,1 @@
+alter table account add test varchar(255);

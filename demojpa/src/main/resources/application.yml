@@ -3,3 +3,11 @@ spring:
         url: jdbc:postgresql://localhost:5432/springboot
         username: lect
         password: prac
+    jpa:
+        show-sql: true
+        generate-ddl: false
+        hibernate:
+            ddl-auto: validate
+    flyway:
+        baseline-on-migrate: true
+        baseline-version: 0
